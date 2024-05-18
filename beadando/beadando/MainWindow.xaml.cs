@@ -25,12 +25,13 @@ namespace beadando
     {
 
         Photos photos;
-        string path = "C:\\Users\\agocs\\Desktop\\fasz\\beadando\\images";
+        string path = "C:\\Users\\agocs\\Desktop\\asd3\\12beadando\\beadando\\images";
         ICollectionView myView;
 
         public MainWindow()
         {
             InitializeComponent();
+            //ResizeMode = ResizeMode.NoResize;
             this.Loaded += MainWindow_Loaded;
         }
 
@@ -46,6 +47,24 @@ namespace beadando
             FileSystemWatcher fsw = new FileSystemWatcher(path);
             fsw.Created += FswCreated;
             fsw.EnableRaisingEvents = true;
+
+            nezetValtas();
+        }
+
+        private void nezetValtas()
+        {
+            if (Properties.Settings.Default.mod == "1")
+            {
+                elsoKonfiguracio();
+            }
+            else if(Properties.Settings.Default.mod == "2")
+            {
+                masodikKonfiguracio();
+            }
+            else
+            {
+                harmadikKonfiguracio();
+            }
         }
 
         private void FswCreated(object sender, FileSystemEventArgs e)
@@ -63,24 +82,61 @@ namespace beadando
             }
         }
 
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            elso.Visibility = Visibility.Visible;
-            masodik.Visibility = Visibility.Hidden;
-            elso.Visibility = Visibility.Visible;
+            Properties.Settings.Default.mod = "1";
+            Properties.Settings.Default.Save();
+            elsoKonfiguracio();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            elso.Visibility = Visibility.Hidden;
-            masodik.Visibility = Visibility.Visible;
-            elso.Visibility = Visibility.Hidden;
+            Properties.Settings.Default.mod = "2";
+            Properties.Settings.Default.Save();
+            masodikKonfiguracio();
         }
+
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
+            Properties.Settings.Default.mod = "3";
+            Properties.Settings.Default.Save();
+            harmadikKonfiguracio();
         }
+
+        private void elsoKonfiguracio()
+        {
+            gomb1.Background = new SolidColorBrush(Colors.Gainsboro);
+            gomb2.Background = new SolidColorBrush(Colors.GhostWhite);
+            gomb3.Background = new SolidColorBrush(Colors.GhostWhite);
+            elso.Visibility = Visibility.Visible;
+            masodik.Visibility = Visibility.Hidden;
+            harmadik.Visibility = Visibility.Hidden;
+        }
+
+
+        private void masodikKonfiguracio()
+        {
+            gomb1.Background = new SolidColorBrush(Colors.GhostWhite);
+            gomb2.Background = new SolidColorBrush(Colors.Gainsboro);
+            gomb3.Background = new SolidColorBrush(Colors.GhostWhite);
+            elso.Visibility = Visibility.Hidden;
+            masodik.Visibility = Visibility.Visible;
+            harmadik.Visibility = Visibility.Hidden;
+        }
+        private void harmadikKonfiguracio()
+        {
+            gomb1.Background = new SolidColorBrush(Colors.GhostWhite);
+            gomb2.Background = new SolidColorBrush(Colors.GhostWhite);
+            gomb3.Background = new SolidColorBrush(Colors.Gainsboro);
+            elso.Visibility = Visibility.Hidden;
+            masodik.Visibility = Visibility.Hidden;
+            harmadik.Visibility = Visibility.Visible;
+        }
+
+
+        //jobbra
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             if (myView != null)
@@ -93,6 +149,23 @@ namespace beadando
                 {
                     // If the current position is the last item, move to the first item
                     myView.MoveCurrentToFirst();
+                }
+            }
+        }
+
+        //balra
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            if (myView != null)
+            {
+                if (myView.CurrentPosition > 0)
+                {
+                    myView.MoveCurrentToPrevious();
+                }
+                else
+                {
+                    // If the current position is the first item, move to the last item
+                    myView.MoveCurrentToLast();
                 }
             }
         }

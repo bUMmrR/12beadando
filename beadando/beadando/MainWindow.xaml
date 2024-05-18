@@ -5,50 +5,105 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:beadando" d:DataContext="{d:DesignInstance Type=local:Photos}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        
+        Title="MainWindow" Height="450" Width="600">
 
 
-        <Window.Resources>
+    <Window.Resources>
         <local:CountConvert x:Key="countConv"/>
+        <local:SliderToWidthConverter x:Key="SliderToWidthConverter" />
 
-            
-            <!--maga a kép kimutásának az alapja-->
-            <DataTemplate x:Key="dtPict">
-                <Border BorderThickness="3" BorderBrush="AliceBlue" CornerRadius="10">
-                    <StackPanel>
-                        <Image Source="{Binding FullName}" Width="128" Margin="5"/>
-                        <TextBlock Text="{Binding Name, Mode=OneWay}" TextAlignment="Center" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding LastAccessTime, Mode=OneWay}" TextAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-            </DataTemplate>
+        <!--maga a kép kimutásának az alapja-->
+        <DataTemplate x:Key="dtPict">
+            <Border BorderThickness="3" BorderBrush="AliceBlue" CornerRadius="10">
+                <StackPanel>
+                    <Image Source="{Binding FullName}" Width="128" Margin="5"/>
+                    <TextBlock Text="{Binding Name, Mode=OneWay}" TextAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding LastAccessTime, Mode=OneWay}" TextAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
 
-            <!--konkrétán ötletem sincs-->
-            <ItemsPanelTemplate x:Key="pictTemplate">
-                <WrapPanel/>
-            </ItemsPanelTemplate>
-            
-        </Window.Resources>
+        <!--konkrétán ötletem sincs-->
+        <ItemsPanelTemplate x:Key="pictTemplate">
+            <WrapPanel/>
+        </ItemsPanelTemplate>
+
+    </Window.Resources>
 
     <Grid>
         
         <!--az oldalak kiválasztása-->
         <ToolBar DockPanel.Dock="Top" Height="26" VerticalAlignment="Top" >
-            <Button Content="1" Height="21" Click="Button_Click"  />
-            <Button Content="2" Height="21" Click="Button_Click_1" />
-            <Button Content="3" Height="21" Click="Button_Click_2" />
+            <Button Content="1" Height="21" Click="Button_Click" x:Name="gomb1" />
+            <Button Content="2" Height="21" Click="Button_Click_1" x:Name="gomb2"/>
+            <Button Content="3" Height="21" Click="Button_Click_2" x:Name="gomb3"/>
         </ToolBar>
-    
-    
-        <!--Az 1. kimutatása-->
+
+        <!--A elso a cucca-->
         <DockPanel x:Name="elso" Visibility="Hidden" Margin="0,24,0,0">
 
             <StatusBar DockPanel.Dock="Bottom" Height="26" VerticalAlignment="Top">
                 <TextBlock Text="{Binding Count , Converter={StaticResource countConv}}"/>
             </StatusBar>
+            <DockPanel DockPanel.Dock="Top">
+                <!--<Image Source="{Binding FullName}" Margin="5" Height="250"/>-->
+                <StackPanel>
+                    <Image Source="{Binding FullName}" Width="400" Margin="5"/>
+                    <TextBlock Text="{Binding Name, Mode=OneWay}" TextAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding LastAccessTime, Mode=OneWay}" TextAlignment="Center"/>
+                    <TextBlock Text="{Binding Extension, Mode=OneWay}" TextAlignment="Center"/>
+                </StackPanel>
+            </DockPanel>
 
-            <ListBox x:Name="lstBox" ItemsSource="{Binding}" ItemsPanel="{StaticResource pictTemplate}" ItemTemplate="{StaticResource dtPict}"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button DockPanel.Dock="Left" Content="Balra" Click="Button_Click_4" Width="120" Margin="10"  Height="40" />
+                <Button DockPanel.Dock="right" Content="Jobbra" Click="Button_Click_3" Width="120" Margin="10"  Height="40" />
+            </StackPanel>
+
+
+        </DockPanel>
+        
+        
+        <!--A masodiknak a cucca-->
+        <DockPanel x:Name="masodik" Visibility="Hidden" Margin="0,24,0,0">
+            <Slider x:Name="ImageSlider" Minimum="0" Maximum="100" Value="0" Width="200" Margin="10"/>
+            <StatusBar DockPanel.Dock="Bottom" Height="26" VerticalAlignment="Top">
+                <TextBlock Text="{Binding Count , Converter={StaticResource countConv}}"/>
+            </StatusBar>
+            <ListBox x:Name="azA3ListBox" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" >
+                            <Image Width="{Binding ElementName=ImageSlider, Path=Value, Converter={StaticResource SliderToWidthConverter}}" Height="Auto" Source="{Binding FullName}"/>
+                            <StackPanel  Margin="5" >
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="Név: "/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Létrehozási dátum: "/>
+                                    <TextBlock Text="{Binding CreationTime}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Extension: "/>
+                                    <TextBlock Text="{Binding Extension}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    
+        <!--Az 3. kimutatása-->
+        <DockPanel x:Name="harmadik" Visibility="Hidden" Margin="0,24,0,0">
+
+            <StatusBar DockPanel.Dock="Bottom" Height="26" VerticalAlignment="Top">
+                <TextBlock Text="{Binding Count , Converter={StaticResource countConv}}"/>
+            </StatusBar>
+
+            <ListBox x:Name="lstBox" ItemsSource="{Binding}" ItemsPanel="{StaticResource pictTemplate}" ItemTemplate="{StaticResource dtPict}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
@@ -61,19 +116,6 @@
                     </GroupStyle>
                 </ListBox.GroupStyle>
             </ListBox>
-        </DockPanel>
-
-
-        <DockPanel x:Name="masodik" Visibility="Hidden" Margin="0,24,0,0">
-
-            <StatusBar DockPanel.Dock="Bottom" Height="26" VerticalAlignment="Top">
-                <TextBlock Text="{Binding Count , Converter={StaticResource countConv}}"/>
-            </StatusBar>
-
-            <Image Source="{Binding FullName}" Width="128" Margin="5"/>
-
-            <Button DockPanel.Dock="right" Content="jobbra" Click="Button_Click_3"/>
-
         </DockPanel>
     </Grid>
 
