@@ -25,7 +25,7 @@ namespace beadando
     {
 
         Photos photos;
-        string path = "C:\\Users\\agocs\\Desktop\\asd3\\12beadando\\beadando\\images";
+        string path = "C:\\Users\\agocs\\Desktop\\-\\Progi\\12beadando\\beadando\\images";
         ICollectionView myView;
 
         public MainWindow()

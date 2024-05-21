@@ -8,18 +8,18 @@ using System.Windows.Data;
 
 namespace beadando
 {
-    public class SliderToWidthConverter : IValueConverter
+    public class SliderToWidthConverter2 : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double sliderValue = (double)value;
+            double sliderValue2 = (double)value;
 
             // Scale the value from 20 to 80 pixels
-            double minWidth = 20;
-            double maxWidth = 80;
+            double minWidth = 50;
+            double maxWidth = 200;
 
             // Assuming the slider maximum value is 100 for this example
-            double scaledWidth = minWidth + (sliderValue / 100) * (maxWidth - minWidth);
+            double scaledWidth = minWidth + (sliderValue2 / 100) * (maxWidth - minWidth);
             return scaledWidth;
         }
 

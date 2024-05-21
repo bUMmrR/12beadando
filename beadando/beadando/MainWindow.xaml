@@ -12,12 +12,13 @@
     <Window.Resources>
         <local:CountConvert x:Key="countConv"/>
         <local:SliderToWidthConverter x:Key="SliderToWidthConverter" />
+        <local:SliderToWidthConverter2 x:Key="SliderToWidthConverter2" />
 
         <!--maga a kép kimutásának az alapja-->
         <DataTemplate x:Key="dtPict">
             <Border BorderThickness="3" BorderBrush="AliceBlue" CornerRadius="10">
                 <StackPanel>
-                    <Image Source="{Binding FullName}" Width="128" Margin="5"/>
+                    <Image Width="{Binding ElementName=ImageSlider2, Path=Value, Converter={StaticResource SliderToWidthConverter}}" Height="Auto" Source="{Binding FullName}" Margin="5"/>
                     <TextBlock Text="{Binding Name, Mode=OneWay}" TextAlignment="Center" FontWeight="Bold"/>
                     <TextBlock Text="{Binding LastAccessTime, Mode=OneWay}" TextAlignment="Center"/>
                 </StackPanel>
@@ -67,10 +68,14 @@
         
         <!--A masodiknak a cucca-->
         <DockPanel x:Name="masodik" Visibility="Hidden" Margin="0,24,0,0">
-            <Slider x:Name="ImageSlider" Minimum="0" Maximum="100" Value="0" Width="200" Margin="10"/>
             <StatusBar DockPanel.Dock="Bottom" Height="26" VerticalAlignment="Top">
                 <TextBlock Text="{Binding Count , Converter={StaticResource countConv}}"/>
             </StatusBar>
+            <Slider x:Name="ImageSlider" Minimum="0" Maximum="100" Value="0" Width="200" Margin="10" HorizontalAlignment="Center">
+                <Slider.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Slider.LayoutTransform>
+            </Slider>
             <ListBox x:Name="azA3ListBox" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -99,6 +104,12 @@
         <!--Az 3. kimutatása-->
         <DockPanel x:Name="harmadik" Visibility="Hidden" Margin="0,24,0,0">
 
+            <Slider x:Name="ImageSlider2" Minimum="0" Maximum="100" Value="0" Width="200" Margin="10" HorizontalAlignment="Center">
+                <Slider.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Slider.LayoutTransform>
+            </Slider>
+            
             <StatusBar DockPanel.Dock="Bottom" Height="26" VerticalAlignment="Top">
                 <TextBlock Text="{Binding Count , Converter={StaticResource countConv}}"/>
             </StatusBar>
