@@ -25,7 +25,7 @@ namespace beadando
     {
 
         Photos photos;
-        string path = "C:\\Users\\agocs\\Desktop\\-\\Progi\\12beadando\\beadando\\images";
+        string path = "C:\\Users\\agocs\\Desktop\\asd3\\12beadando\\beadando\\images";
         ICollectionView myView;
 
         public MainWindow()
@@ -37,6 +37,7 @@ namespace beadando
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            ResizeMode = ResizeMode.NoResize;
             var files = new DirectoryInfo(path).GetFiles().ToList();
             photos = new Photos(files);
 
@@ -168,6 +169,20 @@ namespace beadando
                     myView.MoveCurrentToLast();
                 }
             }
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            myView.SortDescriptions.Clear();
+            myView.SortDescriptions.Add(
+                new SortDescription("Name", ListSortDirection.Descending));
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            myView.SortDescriptions.Clear();
+            myView.SortDescriptions.Add(
+                new SortDescription("Extension", ListSortDirection.Ascending));
         }
     }
 }

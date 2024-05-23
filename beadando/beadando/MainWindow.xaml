@@ -71,11 +71,16 @@
             <StatusBar DockPanel.Dock="Bottom" Height="26" VerticalAlignment="Top">
                 <TextBlock Text="{Binding Count , Converter={StaticResource countConv}}"/>
             </StatusBar>
-            <Slider x:Name="ImageSlider" Minimum="0" Maximum="100" Value="0" Width="200" Margin="10" HorizontalAlignment="Center">
-                <Slider.LayoutTransform>
-                    <RotateTransform Angle="90" />
-                </Slider.LayoutTransform>
-            </Slider>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                
+                <Slider x:Name="ImageSlider" Minimum="0" Maximum="100" Value="0" Width="200" Margin="10" HorizontalAlignment="Center">
+                    <Slider.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </Slider.LayoutTransform>
+                </Slider>
+                <Button Content="Név szerint"       Margin="5" Click="Button_Click_5"></Button>
+                <Button Content="Extension szerint" Margin="5" Click="Button_Click_6"></Button>
+            </StackPanel>
             <ListBox x:Name="azA3ListBox" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -104,16 +109,23 @@
         <!--Az 3. kimutatása-->
         <DockPanel x:Name="harmadik" Visibility="Hidden" Margin="0,24,0,0">
 
-            <Slider x:Name="ImageSlider2" Minimum="0" Maximum="100" Value="0" Width="200" Margin="10" HorizontalAlignment="Center">
-                <Slider.LayoutTransform>
-                    <RotateTransform Angle="90" />
-                </Slider.LayoutTransform>
-            </Slider>
-            
+
+
+
             <StatusBar DockPanel.Dock="Bottom" Height="26" VerticalAlignment="Top">
                 <TextBlock Text="{Binding Count , Converter={StaticResource countConv}}"/>
             </StatusBar>
 
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                <Slider x:Name="ImageSlider2" Minimum="0" Maximum="100" Value="0" Width="200" Margin="10" HorizontalAlignment="Center">
+                    <Slider.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </Slider.LayoutTransform>
+                </Slider>
+                <Button Content="Név szerint"       Margin="5" Click="Button_Click_5"></Button>
+                <Button Content="Extension szerint" Margin="5" Click="Button_Click_6"></Button>
+            </StackPanel>
             <ListBox x:Name="lstBox" ItemsSource="{Binding}" ItemsPanel="{StaticResource pictTemplate}" ItemTemplate="{StaticResource dtPict}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.GroupStyle>
                     <GroupStyle>
